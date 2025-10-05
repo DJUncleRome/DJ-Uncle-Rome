@@ -36,7 +36,7 @@ if (contactForm) {
     e.preventDefault();
 
     // Send form via EmailJS
-    emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+    emailjs.sendForm('service_4o1e31p', 'template_22nkywp', this)
       .then(() => {
         document.getElementById('formMessage').innerText = "Message sent! Thank you!";
         this.reset();
