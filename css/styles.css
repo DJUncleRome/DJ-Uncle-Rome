@@ -103,3 +103,12 @@ h1 {
   background-color: #ffd24d;
   color: #9d1919;
 }
+
+.btn-animate:hover {
+  animation: pulse 1s;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.25);
+  background-color: #e1a302;
+  color: #9d1919;
+  font-weight: bolder;
+}
