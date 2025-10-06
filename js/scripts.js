@@ -35,14 +35,19 @@ if (contactForm) {
   contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // Send form via EmailJS
-    emailjs.sendForm('service_4o1e31p', 'template_22nkywp', this)
+    const msg = document.getElementById('formMessage');
+    msg.innerText = "Sending...";
+    msg.style.color = "gray";
+
+    emailjs.sendForm('service_4o1e31p', 'template_22nkywp', this, 'mO2ZdDBbVEe7g5r_2')
       .then(() => {
-        document.getElementById('formMessage').innerText = "Message sent! Thank you!";
+        msg.innerText = "✅ Message sent! Thank you!";
+        msg.style.color = "green";
         this.reset();
       })
       .catch((err) => {
-        document.getElementById('formMessage').innerText = "Oops, something went wrong.";
+        msg.innerText = "❌ Oops, something went wrong. Please try again.";
+        msg.style.color = "red";
         console.error(err);
       });
   });
@@ -52,3 +57,4 @@ if (contactForm) {
 // PLACEHOLDER FOR FUTURE SCRIPTS
 // ----------------------
 // Add any other custom JS here (audio controls, animations, etc.)
+
