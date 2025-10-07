@@ -29,7 +29,6 @@ document.querySelectorAll('.nav-link').forEach(link => {
 // EMAILJS CONTACT FORM HANDLING
 // ----------------------
 (function() {
-  // Initialize EmailJS (global object loaded from CDN in index.html)
   emailjs.init("mO2ZdDBbVEe7g5r_2");
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -43,7 +42,12 @@ document.querySelectorAll('.nav-link').forEach(link => {
       msg.textContent = "Sending...";
       msg.style.color = "gray";
 
-      emailjs.sendForm('service_4o1e31p', 'template_22nkywp', form)
+      // Send notification to you
+      emailjs.sendForm('service_4o1e31p', 'template_e097hey', form)
+        .then(() => {
+          // Send auto-reply to user
+          return emailjs.sendForm('service_4o1e31p', 'template_22nkywp', form);
+        })
         .then(() => {
           msg.textContent = "✅ Message sent! Thank you!";
           msg.style.color = "green";
@@ -57,6 +61,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
     });
   });
 })();
+
 
 
 
