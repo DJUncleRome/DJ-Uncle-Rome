@@ -90,46 +90,10 @@
     </a>
   </footer>
 
-
-</body>
-
   <script src="js/jquery-2.1.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- ✅ New EmailJS loader -->
-<script type="module">
-  import emailjs from 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-
-  // Initialize EmailJS
-  emailjs.init({
-    publicKey: "mO2ZdDBbVEe7g5r_2"
-  });
-
-  // When the DOM is ready
-  document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contactForm');
-    const msg = document.getElementById('formMessage');
-
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      msg.textContent = "Sending...";
-      msg.style.color = "gray";
-
-      emailjs.sendForm('service_4o1e31p', 'template_22nkywp', contactForm)
-        .then(() => {
-          msg.textContent = "✅ Message sent! Thank you!";
-          msg.style.color = "green";
-          contactForm.reset();
-        })
-        .catch((error) => {
-          console.error("EmailJS error:", error);
-          msg.textContent = "❌ Oops! Something went wrong.";
-          msg.style.color = "red";
-        });
-    });
-  });
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="js/scripts.js"></script>
 
-
+</body>
 </html>
-
