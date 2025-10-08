@@ -59,6 +59,10 @@ h1 {
   color: #e1a302;
   padding: 3rem 0;
   text-align: center;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 6px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 6px);
+  background-size: 20px 20px;
 }
 
 #contact h2 {
@@ -111,4 +115,31 @@ h1 {
   background-color: #e1a302;
   color: #9d1919;
   font-weight: bolder;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.magic-sparkle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  z-index: 9999;
+}
+
+#about {
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 6px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 6px);
+  background-size: 20px 20px;
+  padding: 1em
 }
