@@ -1,171 +1,143 @@
-/* ---------------------------
-   General Font & Colors
-----------------------------*/
-body {
-  font-family: 'system-ui', sans-serif;
-  color: #e1a302;
-  background-color: #fff; /* default background for site sections */
-}
+document.addEventListener("DOMContentLoaded", () => {
+  // Smooth scrolling
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
 
-h1 {
-  font-family: 'Design System D W01 700R', sans-serif;
-  color: #e1a302;
-}
+  // Navbar collapse
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      const navbarCollapse = document.getElementById('navbarNav');
+      if (navbarCollapse?.classList.contains('show')) {
+        new bootstrap.Collapse(navbarCollapse).toggle();
+      }
+    });
+  });
 
-.lead {
-  color: #e1a302;
-}
+  // Fade-in observer
+  const elements = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  });
+  elements.forEach(el => observer.observe(el));
 
-/* Hero Section */
-#hero {
-  position: relative;
-  overflow: hidden;
-  color: #e1a302; /* logo/gold text color */
-  text-align: center;
-}
+  // Year in footer
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-#hero video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-  z-index: 1;
-}
+  // EmailJS form
+  const form = document.getElementById('contactForm');
+  const msg = document.getElementById('formMessage');
+  if (form) {
+    msg.textContent = "";
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      msg.textContent = "Sending...";
+      msg.style.color = "gray";
 
-#hero .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(157, 25, 25, 0.6); /* red with 60% opacity */
-  z-index: 2;
-}
+      emailjs.sendForm('service_4o1e31p', 'template_e097hey', form)
+        .then(() => emailjs.sendForm('service_4o1e31p', 'template_22nkywp', form))
+        .then(() => {
+          msg.textContent = "✅ Message sent! Thank you!";
+          msg.style.color = "green";
+          form.reset();
+        })
+        .catch((error) => {
+          console.error("EmailJS error:", error);
+          msg.textContent = "❌ Oops! Something went wrong. Try again.";
+          msg.style.color = "red";
+        });
+    });
+  }
+});
 
-#hero .hero-content {
-  position: relative;
-  z-index: 3;
-}
-/* ---------------------------
-   Connect With Me Section
-----------------------------*/
-#contact {
-  background-color: #9d1919;
-  color: #e1a302;
-  padding: 3rem 0;
-  text-align: center;
-  background-image:
-    repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 6px),
-    repeating-linear-gradient(-45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 6px);
-  background-size: 20px 20px;
-}
 
-#contact h2 {
-  margin-bottom: 1rem;
-  font-family: 'Design System D W01 700R', sans-serif;
-}
+// ----------------------
+// MAGIC WAND SPARKLE EFFECT
+// ----------------------
+document.addEventListener("mousemove", (e) => {
+  const sparkle = document.createElement("div");
+  sparkle.classList.add("magic-sparkle");
+  document.body.appendChild(sparkle);
 
-#contact p {
-  margin-bottom: 2rem;
-}
+  const size = Math.random() * 6 + 4; // 4–10px
+  sparkle.style.width = `${size}px`;
+  sparkle.style.height = `${size}px`;
+  sparkle.style.left = `${e.pageX}px`;
+  sparkle.style.top = `${e.pageY}px`;
 
-/* ---------------------------
-   Contact Form Styling
-----------------------------*/
-#contactForm {
-  max-width: 500px;
-  margin: 0 auto;
-}
+  // random hue for variation
+  const hue = Math.floor(Math.random() * 360);
+  sparkle.style.background = `radial-gradient(circle, hsl(${hue}, 100%, 80%) 0%, transparent 70%)`;
 
-#contactForm .form-control {
-  border-color: #e1a302;
-  background-color: #9d1919;
-  color: #e1a302;
-}
+  // random direction drift
+  const xMove = (Math.random() - 0.5) * 60;
+  const yMove = (Math.random() - 0.5) * 60;
+  sparkle.animate(
+    [
+      { transform: `translate(0, 0) scale(1)`, opacity: 1 },
+      { transform: `translate(${xMove}px, ${yMove}px) scale(0)`, opacity: 0 }
+    ],
+    { duration: 800, easing: "ease-out", fill: "forwards" }
+  );
 
-#contactForm .form-control:focus {
-  border-color: #e1a302;
-  box-shadow: 0 0 0 0.2rem rgba(225, 163, 2, 0.25);
-  background-color: #9d1919;
-  color: #e1a302;
-}
+  setTimeout(() => sparkle.remove(), 800);
+});
 
-#contactForm .btn {
-  background-color: #e1a302;
-  color: #9d1919;
-  font-weight: bold;
-  border: none;
-  transition: all 0.3s ease;
-}
 
-#contactForm .btn:hover {
-  background-color: #ffd24d;
-  color: #9d1919;
-}
+// ----------------------
+// CONTINUOUS SPARKLE IDLE EFFECT
+// ----------------------
+let lastMouseX = window.innerWidth / 2;
+let lastMouseY = window.innerHeight / 2;
 
-.btn-animate:hover {
-  animation: pulse 1s;
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.25);
-  background-color: #e1a302;
-  color: #9d1919;
-  font-weight: bolder;
-}
+// Track last known mouse position
+document.addEventListener("mousemove", (e) => {
+  lastMouseX = e.pageX;
+  lastMouseY = e.pageY;
+});
 
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
+// Emit sparkles periodically (even when still)
+setInterval(() => {
+  const sparkle = document.createElement("div");
+  sparkle.classList.add("magic-sparkle");
+  document.body.appendChild(sparkle);
 
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+  const size = Math.random() * 6 + 4; // 4–10px
+  sparkle.style.width = `${size}px`;
+  sparkle.style.height = `${size}px`;
 
-.magic-sparkle {
-  position: absolute;
-  pointer-events: none;
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  z-index: 9999;
-}
+  // Emit near the cursor, not exactly on it
+  const offsetX = (Math.random() - 0.5) * 50;
+  const offsetY = (Math.random() - 0.5) * 50;
+  sparkle.style.left = `${lastMouseX + offsetX}px`;
+  sparkle.style.top = `${lastMouseY + offsetY}px`;
 
-#about {
-  background-image:
-    repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 6px),
-    repeating-linear-gradient(-45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 6px);
-  background-size: 20px 20px;
-  padding: 1em
-}
+  // random hue for variation
+  const hue = Math.floor(Math.random() * 360);
+  sparkle.style.background = `radial-gradient(circle, hsl(${hue}, 100%, 80%) 0%, transparent 70%)`;
 
-.ticker {
-  width: 100%;
-  background-color: #222; /* dark but visible */
-  color: #fff;
-  overflow: hidden;
-  white-space: nowrap;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-  font-weight: bold;
-  font-size: 0.9rem;
-  position: relative;
-  z-index: 9999;
-}
+  // animation drift
+  const xMove = (Math.random() - 0.5) * 30;
+  const yMove = (Math.random() - 0.5) * 30;
+  sparkle.animate(
+    [
+      { transform: `translate(0, 0) scale(1)`, opacity: 1 },
+      { transform: `translate(${xMove}px, ${yMove}px) scale(0)`, opacity: 0 }
+    ],
+    { duration: 1000, easing: "ease-out", fill: "forwards" }
+  );
 
-.ticker p {
-  display: inline-block;
-  padding-left: 100%;
-  animation: ticker-scroll 15s linear infinite;
-  margin: 0;
-}
+  setTimeout(() => sparkle.remove(), 1000);
+}, 200); // every 0.2 seconds
 
-@keyframes ticker-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
-}
 
+
+
+// Placeholder for future scripts//
